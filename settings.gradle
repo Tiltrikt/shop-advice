@@ -1,0 +1,13 @@
+dependencyResolutionManagement {
+    repositories {
+        mavenCentral()
+    }
+    versionCatalogs {
+        libs {
+            from(files("libs.versions.toml"))
+        }
+    }
+}
+
+rootProject.name = 'shop-advice'
+rootProject.buildFileName = "${rootProject.name}.gradle"

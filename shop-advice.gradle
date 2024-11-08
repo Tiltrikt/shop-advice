@@ -1,0 +1,37 @@
+//file:noinspection GroovyAssignabilityCheck
+plugins {
+    id 'idea'
+    id 'java-library'
+    alias libs.plugins.springframework.boot
+    alias libs.plugins.spring.dependency.management
+}
+
+dependencies {
+    annotationProcessor libs.projectlombok.lombok
+
+    compileOnlyApi libs.projectlombok.lombok
+    compileOnlyApi libs.jetbrains.annotations
+
+    implementation libs.springdoc.springdoc.openapi.starter.webmvc.ui
+    implementation libs.springframework.spring.boot.starter.data.jpa
+    implementation libs.springframework.spring.boot.starter.web
+    implementation libs.springframework.spring.boot.starter.cache
+
+    implementation libs.ben.manes.caffeine
+
+    implementation libs.flywaydb.flyway.core
+    runtimeOnly libs.postgresql.postgresql
+}
+
+java {
+    withSourcesJar()
+    withJavadocJar()
+}
+
+
+tasks.withType(JavaCompile).configureEach {
+    sourceCompatibility = JavaVersion.VERSION_21
+    targetCompatibility = JavaVersion.VERSION_21
+}
+
+group = 'dev.wormix'

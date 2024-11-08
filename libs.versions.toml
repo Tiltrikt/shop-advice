@@ -1,0 +1,45 @@
+[versions]
+# Plugins
+springframework-boot = '3.2.3'
+spring-dependency-management = '1.1.4'
+
+# Utility
+projectlombok-lombok = '1.18.30'
+jetbrains-annotations = '24.1.0'
+commons-codec = '1.16.0'
+
+#Cache
+ben-manes-caffeine = '3.1.8'
+
+# Documentation
+springdoc-springdoc-openapi-starter = '2.6.0'
+
+[libraries]
+#Spring
+springframework-spring-web = { module = 'org.springframework:spring-web' }
+
+# Spring Boot
+springframework-spring-boot-starter-data-jpa = { module = 'org.springframework.boot:spring-boot-starter-data-jpa' }
+springframework-spring-boot-starter-web = { module = 'org.springframework.boot:spring-boot-starter-web' }
+springframework-spring-boot-starter = { module = 'org.springframework.boot:spring-boot-starter' }
+springframework-spring-boot-starter-cache = { module = 'org.springframework.boot:spring-boot-starter-cache' }
+springframework-spring-boot-starter-validation = { module = 'org.springframework.boot:spring-boot-starter-validation' }
+
+# Utility
+projectlombok-lombok = { module = 'org.projectlombok:lombok', version.ref = 'projectlombok-lombok' }
+jetbrains-annotations = { module = 'org.jetbrains:annotations', version.ref = 'jetbrains-annotations' }
+commons-codec = { module = 'commons-codec:commons-codec', version.ref = 'commons-codec' }
+
+#Cache
+ben-manes-caffeine = { module = 'com.github.ben-manes.caffeine:caffeine', version.ref = 'ben-manes-caffeine' }
+
+#Database
+postgresql-postgresql = { module = 'org.postgresql:postgresql' }
+flywaydb-flyway-core = { module = 'org.flywaydb:flyway-core' }
+
+#Documentation
+springdoc-springdoc-openapi-starter-webmvc-ui = { module = 'org.springdoc:springdoc-openapi-starter-webmvc-ui', version.ref = 'springdoc-springdoc-openapi-starter' }
+
+[plugins]
+springframework-boot = { id = 'org.springframework.boot', version.ref = 'springframework-boot' }
+spring-dependency-management = { id = 'io.spring.dependency-management', version.ref = 'spring-dependency-management' }
