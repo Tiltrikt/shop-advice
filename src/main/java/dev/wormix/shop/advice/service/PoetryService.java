@@ -7,7 +7,10 @@ import lombok.experimental.FieldDefaults;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.ai.chat.messages.UserMessage;
 import org.springframework.ai.chat.model.ChatModel;
+import org.springframework.ai.chat.model.ChatResponse;
+import org.springframework.ai.chat.model.Generation;
 import org.springframework.ai.chat.prompt.Prompt;
+import org.springframework.ai.chat.prompt.PromptTemplate;
 import org.springframework.ai.image.ImageModel;
 import org.springframework.ai.image.ImagePrompt;
 import org.springframework.ai.model.Media;
@@ -25,24 +28,7 @@ public class PoetryService {
     public static final String PARSE_BILL = """
         Распарси текстовый чек в JSON формат с использованием следующей структуры данных:
         
-        account_number: строка, номер счета, если присутствует, иначе null.
-        accounting_entry_type: строка, тип операции (например, 'debit' для списаний).
-        balance: строка, баланс после операции, если присутствует, иначе null.
-        barcodes: массив, содержащий строки штрих-кодов, если есть.
-        bill_to: объект, содержащий реквизиты покупателя, такие как:
-        address: строка, адрес покупателя, если присутствует.
-        email: строка, адрес электронной почты.
-        name: строка, имя покупателя.
-        parsed_address: строка, адрес в отформатированном виде.
-        phone_number: строка, номер телефона.
-        reg_number: строка, регистрационный номер.
-        vat_number: строка, номер плательщика НДС.
-        cashback: сумма кэшбэка, если присутствует.
-        category: строка, категория расходов, например, 'Meals & Entertainment'.
-        created_date: строка в формате "YYYY-MM-DD HH:MM
-        ", дата создания чека.
         currency_code: строка, код валюты, например, "CZK".
-        custom_fields: объект, содержащий любые дополнительные поля, если есть.
         date: строка, дата покупки, если присутствует.
         default_category: строка, стандартная категория.
         delivery_date: строка, дата доставки, если есть.
@@ -59,10 +45,6 @@ public class PoetryService {
         guest_count: целое число, количество гостей, если применимо.
         id: целое число, уникальный идентификатор документа.
         img_blur: логическое значение, указывает на наличие размытия в изображении.
-        img_file_name: строка, название файла изображения.
-        img_thumbnail_url: строка, URL миниатюры изображения.
-        img_url: строка, URL полного изображения.
-        incoterms: строка, торговый термин, если есть.
         insurance: строка, информация о страховке, если есть.
         invoice_number: строка, номер счета-фактуры.
         is_approved: логическое значение, указывает на подтверждение документа.
@@ -111,9 +93,14 @@ public class PoetryService {
     public String parseBill(@NotNull MultipartFile multipartFile) {
         Resource imageResource = new ByteArrayResource(multipartFile.getBytes());
 
+        BeanOutputConverter<ActorsFilms> beanOutputConverter =
+            new BeanOutputConverter<>(ActorsFilms.class);
         Media photoMedia = new Media(MediaType.IMAGE_JPEG, imageResource);
         UserMessage userMessage = new UserMessage(PARSE_BILL, photoMedia);
-        Prompt prompt = new Prompt(userMessage);
-        return chatModel.call(userMessage);
+        PromptTemplate promptTemplate = new PromptTemplate(PARSE_BILL);
+        Prompt prompt = promptTemplate.create();
+        chatModel.call(userMessage);
+        Generation generation = response.getResult();
+        String generation.getOutput().getContent();
     }
 }
