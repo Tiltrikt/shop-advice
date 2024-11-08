@@ -28,9 +28,14 @@ spring:
     locations: classpath:flyway/migrations
     validate-migration-naming: true
 
+  ai:
+    openai:
+      api-key: ${SPRING_AI_OPENAI_API_KEY}
+
 springdoc:
   swagger-ui:
     enabled: false
   api-docs:
     enabled: true
     path: /api-docs
+

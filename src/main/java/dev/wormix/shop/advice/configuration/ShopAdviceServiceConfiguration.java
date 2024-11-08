@@ -10,4 +10,5 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 @EnableJpaRepositories(basePackages = "dev.wormix.shop.advice.repository")
 @EntityScan(basePackages = "dev.wormix.shop.advice.model")
 public class ShopAdviceServiceConfiguration {
+
 }
