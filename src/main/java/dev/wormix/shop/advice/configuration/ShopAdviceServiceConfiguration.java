@@ -8,7 +8,7 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.scheduling.annotation.EnableScheduling;
 
 @Configuration
-@EnableAutoConfiguration
+@EnableScheduling
 @EnableJpaRepositories(basePackages = "dev.wormix.shop.advice.repository")
 @EntityScan(basePackages = "dev.wormix.shop.advice.model")
 public class ShopAdviceServiceConfiguration {

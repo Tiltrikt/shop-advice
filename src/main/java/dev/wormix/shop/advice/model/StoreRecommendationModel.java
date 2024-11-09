@@ -1,13 +1,9 @@
 package dev.wormix.shop.advice.model;
 
-import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EntityListeners;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
-import java.time.Instant;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -25,18 +21,18 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 @Builder
 @ToString
 @AllArgsConstructor
-@Table(name = "users")
+@Table(name = "store_recommendations")
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @EntityListeners(AuditingEntityListener.class)
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class UserModel {
+public class StoreRecommendationModel {
 
   @Id
-  @GeneratedValue(strategy = GenerationType.IDENTITY)
-  long id;
+  long userId;
 
-  @NotNull String country;
+  long storeId;
 
-  @NotNull String city;
+  long bucketId;
 
+  double price;
 }

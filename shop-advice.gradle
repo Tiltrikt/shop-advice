@@ -24,8 +24,16 @@ dependencies {
 //    implementation 'org.springframework.ai:spring-ai-openai'
     implementation 'org.springframework.ai:spring-ai-openai-spring-boot-starter'
 
+    implementation 'org.locationtech.jts:jts-core:1.20.0'
+    implementation 'org.hibernate.orm:hibernate-spatial:6.4.4.Final'
+    implementation 'org.orbisgis:postgis-jts:2.2.3'
+    implementation 'com.bedatadriven:jackson-datatype-jts:2.4'
+    implementation 'org.n52.jackson:jackson-datatype-jts:1.2.10'
+
+
+
     implementation libs.flywaydb.flyway.core
-    runtimeOnly libs.postgresql.postgresql
+    implementation libs.postgresql.postgresql
 }
 
 java {

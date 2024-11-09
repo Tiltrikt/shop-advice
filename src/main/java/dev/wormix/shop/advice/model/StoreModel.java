@@ -16,6 +16,7 @@ import lombok.Setter;
 import lombok.ToString;
 import lombok.experimental.FieldDefaults;
 import org.jetbrains.annotations.NotNull;
+import org.locationtech.jts.geom.Point;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 @Entity
@@ -24,11 +25,11 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 @Builder
 @ToString
 @AllArgsConstructor
-@Table(name = "organizations")
+@Table(name = "store")
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @EntityListeners(AuditingEntityListener.class)
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class OrganizationModel {
+public class StoreModel {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -41,6 +42,9 @@ public class OrganizationModel {
   @Column(nullable = false)
   @NotNull
   String country;
+
+  @NotNull
+  String city;
 
   @Column(name = "ico", nullable = false)
   @NotNull
@@ -74,4 +78,7 @@ public class OrganizationModel {
   @Column(nullable = false)
   @NotNull
   String category;
+
+  @Column(columnDefinition = "geography(Point, 4326)")
+  @NotNull Point location;
 }
