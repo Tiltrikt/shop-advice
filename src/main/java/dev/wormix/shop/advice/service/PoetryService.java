@@ -89,18 +89,16 @@ public class PoetryService {
 
     @NotNull ChatModel chatModel;
 
+    public String testConfig() {
+        return chatModel.call("Test call, answer");
+    }
+
     @SneakyThrows
     public String parseBill(@NotNull MultipartFile multipartFile) {
         Resource imageResource = new ByteArrayResource(multipartFile.getBytes());
-
-        BeanOutputConverter<ActorsFilms> beanOutputConverter =
-            new BeanOutputConverter<>(ActorsFilms.class);
         Media photoMedia = new Media(MediaType.IMAGE_JPEG, imageResource);
         UserMessage userMessage = new UserMessage(PARSE_BILL, photoMedia);
-        PromptTemplate promptTemplate = new PromptTemplate(PARSE_BILL);
-        Prompt prompt = promptTemplate.create();
-        chatModel.call(userMessage);
-        Generation generation = response.getResult();
-        String generation.getOutput().getContent();
+        Prompt prompt = new Prompt(userMessage);
+        return chatModel.call(userMessage);
     }
 }

@@ -1,0 +1,14 @@
+
+services:
+  postgres:
+    image: postgres
+    ports:
+      - 5432:5432
+    volumes:
+      - shop-advice-data:/var/lib/postgresql/data
+    env_file:
+      - .env-example
+
+volumes:
+  shop-advice-data:
+    external: false

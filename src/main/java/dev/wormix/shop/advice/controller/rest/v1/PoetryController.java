@@ -23,4 +23,9 @@ public class PoetryController {
     public String generateHaiku(@NotNull @ModelAttribute MultipartFile multipartFile){
         return poetryService.parseBill(multipartFile);
     }
+
+    @GetMapping("/test")
+    public String generateTestAnaswer(){
+        return poetryService.testConfig();
+    }
 }
