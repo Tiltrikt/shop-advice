@@ -1,5 +1,7 @@
-package dev.wormix.shop.advice.service;
+package dev.wormix.shop.advice.service.billing;
 
+import dev.wormix.shop.advice.configuration.ai.BillSchema;
+import dev.wormix.shop.advice.configuration.ai.ClassSchema;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
@@ -7,12 +9,7 @@ import lombok.experimental.FieldDefaults;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.ai.chat.messages.UserMessage;
 import org.springframework.ai.chat.model.ChatModel;
-import org.springframework.ai.chat.model.ChatResponse;
-import org.springframework.ai.chat.model.Generation;
-import org.springframework.ai.chat.prompt.Prompt;
-import org.springframework.ai.chat.prompt.PromptTemplate;
-import org.springframework.ai.image.ImageModel;
-import org.springframework.ai.image.ImagePrompt;
+import org.springframework.ai.converter.BeanOutputConverter;
 import org.springframework.ai.model.Media;
 import org.springframework.core.io.ByteArrayResource;
 import org.springframework.core.io.Resource;
@@ -20,10 +17,13 @@ import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
-public class PoetryService {
+public class BillParserService {
 
     public static final String PARSE_BILL = """
         Распарси текстовый чек в JSON формат с использованием следующей структуры данных:
@@ -84,21 +84,58 @@ public class PoetryService {
         type: строка, тип позиции (например, 'product' или 'food').
         unit_of_measure: строка, единица измерения, если есть.
         upc: строка, код UPC, если есть.
-        weight: строка, вес позиции, если есть.""";
+        weight: строка, вес позиции, если есть.
+        organization_name: single word""";
 
 
-    @NotNull ChatModel chatModel;
+    @NotNull ChatModel parser;
 
-    public String testConfig() {
-        return chatModel.call("Test call, answer");
-    }
+    @NotNull ChatModel classifier;
 
     @SneakyThrows
-    public String parseBill(@NotNull MultipartFile multipartFile) {
+    public Bill parseBill(@NotNull MultipartFile multipartFile) {
         Resource imageResource = new ByteArrayResource(multipartFile.getBytes());
         Media photoMedia = new Media(MediaType.IMAGE_JPEG, imageResource);
         UserMessage userMessage = new UserMessage(PARSE_BILL, photoMedia);
-        Prompt prompt = new Prompt(userMessage);
-        return chatModel.call(userMessage);
+
+        var content = parser.call(userMessage);
+        var outputConverter = new BeanOutputConverter<>(BillSchema.class);
+        var bill = outputConverter.convert(content);
+
+        return Bill.builder()
+          .totalPrice(bill.totalPrice())
+          .organizationName(bill.organizationName())
+          .items(classifyItems(bill)).build();
     }
+
+    private List<ClassifiedItem> classifyItems(BillSchema bill) {
+        var classifiedItems = new ArrayList<ClassifiedItem>();
+        var outputConverter = new BeanOutputConverter<>(ClassSchema.class);
+
+        for (var item : bill.items()) {
+            String clazz = outputConverter
+              .convert(classifier.call(item.name()))
+              .clazz();
+
+            classifiedItems.add(ClassifiedItem.builder()
+              .name(item.name())
+              .unitPrice(item.unitPrice())
+              .quantity(item.quantity())
+              .clazz(clazz)
+              .build());
+        }
+
+        return classifiedItems;
+    }
+
+    public String testClass(String text) {
+        System.out.println(classifier.call("Šmak majon.400ml"));
+        System.out.println(text);
+        return classifier.call(text);
+    }
+
+    public String testParser() {
+        return parser.call("Šmak majon.400ml");
+    }
+
 }
