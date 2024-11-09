@@ -26,14 +26,10 @@ public class StoreController {
       @RequestParam long userId,
       @RequestParam double latitude,
       @RequestParam double longitude,
-      @RequestParam double bucketId
+      @RequestParam long bucketId
   ) {
     FindNearbyStoreQuery query = new FindNearbyStoreQuery(userId, latitude, longitude, bucketId);
     return mediator.dispatch(query, StoreBucketPrice.class);
   }
 
-  @GetMapping("/best/{userId}")
-  public @NotNull StoreRecommendation getBestStoreRecommendation(@PathVariable long userId) {
-
-  }
 }

@@ -71,6 +71,27 @@ public class StoreModel {
   @Column(name = "street_name", nullable = false)
   @NotNull
   String streetName;
+//    final ReceiptModel finalReceiptModel = receiptModel;
+//    bill.getItems().forEach(i -> {
+//      var product = ProductModel.builder()
+//          .itemType("K")
+//          .name(i.getName())
+//          .price(i.getUnitPrice())
+//          .category(i.getClazz())
+//          .organization(store.get())
+//          .build();
+//
+//      productRepository.save(product);
+//
+//      var prodItem = ProductItemModel.builder()
+//        .product(product)
+//        .receipt(finalReceiptModel)
+//        .quantity(i.getQuantity())
+//        .build();
+//
+//      productItemRepository.save(prodItem);
+//    });
+//
 
   @Column(name = "building_number")
   String buildingNumber;

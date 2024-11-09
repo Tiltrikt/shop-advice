@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 @Entity
@@ -29,7 +30,7 @@ public class ReceiptModel {
   @Column(name = "total_price")
   double totalPrice;
 
-  @NotNull String category;
+  @Nullable String category;
 
   @ManyToOne
   @JoinColumn(name = "store_id", nullable = false)

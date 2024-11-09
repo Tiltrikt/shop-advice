@@ -34,6 +34,6 @@ public class ProductModel {
   @NotNull String category;
 
   @ManyToOne
-  @JoinColumn(name = "store_id", nullable = false)
+  @JoinColumn(name = "store_id", unique = false, nullable = false)
   StoreModel organization;
 }

@@ -10,7 +10,7 @@ public record BillSchema(
   public record Item(
     @JsonProperty(required = true, value = "name") String name,
     @JsonProperty(required = true, value = "unit_price") double unitPrice,
-    @JsonProperty(required = true, value = "quantity") double quantity
+    @JsonProperty(required = true, value = "quantity") int quantity
   ) {}
 //    @JsonProperty(required = true, value = "category") Category category) {
 

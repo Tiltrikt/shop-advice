@@ -3,11 +3,11 @@ package dev.wormix.shop.advice.service.billing;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
-import lombok.ToString;
+import lombok.Data;
 import lombok.experimental.FieldDefaults;
 
+@Data
 @Builder
-@ToString
 @AllArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class ClassifiedItem {
@@ -18,6 +18,6 @@ public class ClassifiedItem {
 
   double unitPrice;
 
-  double quantity;
+  int quantity;
 
 }

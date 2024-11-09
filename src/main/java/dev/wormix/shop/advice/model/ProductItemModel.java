@@ -29,7 +29,7 @@ public class ProductItemModel {
   ProductModel product;
 
   @ManyToOne
-  @JoinColumn(name = "receipt_id", nullable = false)
+  @JoinColumn(name = "receipt_id", unique = false, nullable = false)
   ReceiptModel receipt;
 
   @Column(name = "discount_id")
