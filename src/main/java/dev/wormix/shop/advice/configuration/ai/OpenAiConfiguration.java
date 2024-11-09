@@ -18,9 +18,9 @@ public class OpenAiConfiguration {
     System.out.println(jsonSchema);
     var openAiApi = new OpenAiApi(System.getenv("OPENAI_API_KEY"));
     var options = OpenAiChatOptions.builder()
-      .withModel(OpenAiApi.ChatModel.GPT_4_O.getValue())
-      .withResponseFormat(new ResponseFormat(ResponseFormat.Type.JSON_SCHEMA, jsonSchema))
-      .build();
+        .withModel(OpenAiApi.ChatModel.GPT_4_O.getValue())
+        .withResponseFormat(new ResponseFormat(ResponseFormat.Type.JSON_SCHEMA, jsonSchema))
+        .build();
 
     return new OpenAiChatModel(openAiApi, options);
   }
@@ -32,9 +32,9 @@ public class OpenAiConfiguration {
     System.out.println(jsonSchema);
     var openAiApi = new OpenAiApi(System.getenv("OPENAI_API_KEY"));
     var options = OpenAiChatOptions.builder()
-      .withModel("ft:gpt-4o-mini-2024-07-18:personal:product-categorization:ARUpHk6S")
-      .withResponseFormat(new ResponseFormat(ResponseFormat.Type.JSON_SCHEMA, jsonSchema))
-      .build();
+        .withModel("ft:gpt-4o-mini-2024-07-18:personal:product-categorization:ARUpHk6S")
+        .withResponseFormat(new ResponseFormat(ResponseFormat.Type.JSON_SCHEMA, jsonSchema))
+        .build();
     return new OpenAiChatModel(openAiApi, options);
   }
 }

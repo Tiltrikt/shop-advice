@@ -3,6 +3,8 @@ package dev.wormix.shop.advice.model;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EntityListeners;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -30,9 +32,13 @@ public class StoreRecommendationModel {
   @Id
   long userId;
 
-  long storeId;
+  @OneToOne
+  @JoinColumn(name = "store_id")
+  @NotNull StoreModel store;
 
-  long bucketId;
+  @OneToOne
+  @JoinColumn(name = "bucket_id")
+  @NotNull BucketModel bucket;
 
   double price;
 }

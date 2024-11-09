@@ -21,4 +21,9 @@ public class UserServiceImpl implements UserService {
     return userRepository.findById(id)
         .orElseThrow(() -> new UserNotFoundException("User with id '%d' not found".formatted(id)));
   }
+
+  @Override
+  public @NotNull UserModel save(@NotNull UserModel user) {
+    return userRepository.save(user);
+  }
 }

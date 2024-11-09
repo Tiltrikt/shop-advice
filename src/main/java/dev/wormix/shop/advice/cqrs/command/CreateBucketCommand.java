@@ -14,6 +14,8 @@ import org.jetbrains.annotations.NotNull;
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public class CreateBucketCommand {
 
+  long userId;
+
   @NotNull String bucketName;
 
   @NotNull List<String> productList;

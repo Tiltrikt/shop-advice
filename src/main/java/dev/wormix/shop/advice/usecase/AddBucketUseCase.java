@@ -3,7 +3,6 @@ package dev.wormix.shop.advice.usecase;
 import dev.wormix.shop.advice.model.BucketModel;
 import dev.wormix.shop.advice.repository.BucketRepository;
 import dev.wormix.shop.advice.usecase.command.AddBucketCommand;
-import jakarta.persistence.Column;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;

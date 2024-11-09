@@ -6,14 +6,15 @@ import dev.wormix.shop.advice.api.Store;
 import dev.wormix.shop.advice.api.StoreBucketPrice;
 import dev.wormix.shop.advice.cqrs.query.CalculateBucketPriceInStoreQuery;
 import dev.wormix.shop.advice.cqrs.query.FindNearbyStoreQuery;
-import dev.wormix.shop.advice.exception.StoreNotFoundException;
+import dev.wormix.shop.advice.exception.ProductNotFoundException;
 import dev.wormix.shop.advice.model.BucketModel;
 import dev.wormix.shop.advice.model.StoreModel;
-import dev.wormix.shop.advice.repository.BucketRepository;
 import dev.wormix.shop.advice.repository.StoreRepository;
 import dev.wormix.shop.advice.service.bucket.BucketService;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Objects;
+import java.util.stream.Collectors;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
@@ -23,7 +24,7 @@ import org.springframework.stereotype.Component;
 @Component
 @RequiredArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
-public class FindNearbyStoreQueryHandler implements CommandHandler<FindNearbyStoreQuery, StoreBucketPrice> {
+public class FindNearbyStoreQueryHandler implements CommandHandler<FindNearbyStoreQuery, List<StoreBucketPrice>> {
 
   @NotNull StoreRepository storeRepository;
 
@@ -33,25 +34,31 @@ public class FindNearbyStoreQueryHandler implements CommandHandler<FindNearbySto
   private final CalculateBucketPriceInStoreQueryHandler calculateBucketPriceInStoreQueryHandler;
 
   @Override
-  @SuppressWarnings("OptionalGetWithoutIsPresent")
-  public @NotNull StoreBucketPrice handle(@NotNull FindNearbyStoreQuery command) {
-    List<StoreModel> storeList = storeRepository.findByLocationNear(command.getLongitude(), command.getLatitude(), 500);
+  public @NotNull List<StoreBucketPrice> handle(@NotNull FindNearbyStoreQuery command) {
+    List<StoreModel> storeList = storeRepository.findByLocationNear(command.getLongitude(), command.getLatitude(), 2000);
     BucketModel bucketModel = bucketService.getById(command.getBucketId());
-    return storeList.stream()
+    List<StoreBucketPrice> storeBucketPrices = storeList.stream()
         .map(storeModel -> {
-          System.out.println("Sdsafdsfsdfds");
           CalculateBucketPriceInStoreQuery calculateBucketPriceInStoreQuery = new CalculateBucketPriceInStoreQuery(
               storeModel,
               bucketModel
           );
-          Bucket bucket = new Bucket(bucketModel.getName(), bucketModel.getProductList());
-          double price = calculateBucketPriceInStoreQueryHandler.handle(calculateBucketPriceInStoreQuery);
+          Bucket bucket = new Bucket(bucketModel.getId(), bucketModel.getName(), bucketModel.getProductList());
+          double price;
+          try {
+            price = calculateBucketPriceInStoreQueryHandler.handle(calculateBucketPriceInStoreQuery);
+          } catch (ProductNotFoundException e) {
+            return null;
+          }
           double latitude = storeModel.getLocation().getY();
           double longitude = storeModel.getLocation().getX();
           Store store = new Store(storeModel.getId(), storeModel.getName(), latitude, longitude);
           return new StoreBucketPrice(store, bucket, price);
         })
-        .min(Comparator.comparingDouble(StoreBucketPrice::getPrice))
-        .orElseThrow(() -> new StoreNotFoundException("No nearby store found"));
+        .filter(Objects::nonNull)
+        .sorted(Comparator.comparingDouble(StoreBucketPrice::getPrice))
+        .limit(5)
+        .collect(Collectors.toList());
+    return storeBucketPrices;
   }
 }

@@ -38,8 +38,8 @@ public class BucketModel {
   long id;
 
   @ManyToOne
-  @JoinColumn(name = "product_id")
-  @NotNull UserModel userId;
+  @JoinColumn(name = "user_id")
+  @NotNull UserModel user;
 
   @NotNull String name;
 
