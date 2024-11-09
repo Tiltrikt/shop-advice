@@ -14,6 +14,8 @@ import org.jetbrains.annotations.NotNull;
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public class Bucket {
 
+  long userId;
+
   @NotNull String name;
 
   @NotNull List<String> productList;

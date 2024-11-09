@@ -1,5 +1,6 @@
 //package dev.wormix.shop.advice.job;
 //
+//import dev.crashbandicootfm.mediator.Mediatr;
 //import dev.wormix.shop.advice.api.StoreBucketPrice;
 //import dev.wormix.shop.advice.model.BucketModel;
 //import dev.wormix.shop.advice.model.StoreModel;
@@ -8,6 +9,7 @@
 //import dev.wormix.shop.advice.repository.StoreRecommendationRepository;
 //import dev.wormix.shop.advice.repository.StoreRepository;
 //import dev.wormix.shop.advice.repository.UserRepository;
+//import dev.wormix.shop.advice.service.user.UserService;
 //import dev.wormix.shop.advice.usecase.CheckBasketPriceInStoreUseCase;
 //import dev.wormix.shop.advice.usecase.command.FindCheapestStoreForBucketCommand;
 //import java.util.ArrayList;
@@ -27,9 +29,11 @@
 //@FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 //public class GenerateStoreRecommendationJob {
 //
-//  @NotNull UserRepository userRepository;
+//  @NotNull Mediatr mediatr;
 //
-//  @NotNull StoreRepository storeRepository;
+//  @NotNull UserService userService;
+//
+//  @NotNull StoreService storeRepository;
 //
 //  @NotNull StoreRecommendationRepository storeRecommendationRepository;
 //
