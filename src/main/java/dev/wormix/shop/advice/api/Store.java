@@ -1,6 +1,5 @@
-package dev.wormix.shop.advice.dto;
+package dev.wormix.shop.advice.api;
 
-import java.util.List;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
@@ -12,9 +11,13 @@ import org.jetbrains.annotations.NotNull;
 @Builder
 @RequiredArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
-public class Bucket {
+public class Store {
+
+  long id;
 
   @NotNull String name;
 
-  @NotNull List<String> productList;
+  double latitude;
+
+  double longitude;
 }

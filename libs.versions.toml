@@ -24,6 +24,7 @@ springframework-spring-boot-starter-web = { module = 'org.springframework.boot:s
 springframework-spring-boot-starter = { module = 'org.springframework.boot:spring-boot-starter' }
 springframework-spring-boot-starter-cache = { module = 'org.springframework.boot:spring-boot-starter-cache' }
 springframework-spring-boot-starter-validation = { module = 'org.springframework.boot:spring-boot-starter-validation' }
+springframework-ai-spring-ai-openai-spring-boot-starter = { module = 'org.springframework.ai:spring-ai-openai-spring-boot-starter' }
 
 # Utility
 projectlombok-lombok = { module = 'org.projectlombok:lombok', version.ref = 'projectlombok-lombok' }

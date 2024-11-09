@@ -6,9 +6,9 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 @SpringBootApplication(scanBasePackages = {
     "dev.wormix.shop.advice"
 })
-public class ShopAdviceServiceApplication {
+public class ShopAdviceApplication {
 
   public static void main(String[] args) {
-    SpringApplication.run(ShopAdviceServiceApplication.class, args);
+    SpringApplication.run(ShopAdviceApplication.class, args);
   }
 }

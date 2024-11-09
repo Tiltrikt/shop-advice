@@ -20,9 +20,7 @@ dependencies {
     implementation libs.ben.manes.caffeine
 
     implementation platform("org.springframework.ai:spring-ai-bom:1.0.0-SNAPSHOT")
-
-//    implementation 'org.springframework.ai:spring-ai-openai'
-    implementation 'org.springframework.ai:spring-ai-openai-spring-boot-starter'
+    implementation libs.springframework.ai.spring.ai.openai.spring.boot.starter
 
     implementation 'org.locationtech.jts:jts-core:1.20.0'
     implementation 'org.hibernate.orm:hibernate-spatial:6.4.4.Final'
@@ -30,7 +28,7 @@ dependencies {
     implementation 'com.bedatadriven:jackson-datatype-jts:2.4'
     implementation 'org.n52.jackson:jackson-datatype-jts:1.2.10'
 
-
+    implementation 'dev.crashbandicootfm:mediator:1.0.2'
 
     implementation libs.flywaydb.flyway.core
     implementation libs.postgresql.postgresql
