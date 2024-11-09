@@ -34,4 +34,5 @@ public class UserModel {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   Long id;
+
 }
