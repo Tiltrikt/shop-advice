@@ -35,5 +35,5 @@ public class ProductModel {
 
   @ManyToOne
   @JoinColumn(name = "store_id", unique = false, nullable = false)
-  StoreModel organization;
+  StoreModel store;
 }

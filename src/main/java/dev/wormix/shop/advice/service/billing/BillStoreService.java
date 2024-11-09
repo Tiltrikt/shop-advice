@@ -56,7 +56,7 @@ public class BillStoreService {
           .name(i.getName())
           .price(i.getUnitPrice())
           .category(i.getClazz())
-          .organization(store.get())
+          .store(store.get())
           .build();
 
       productRepository.save(product);
